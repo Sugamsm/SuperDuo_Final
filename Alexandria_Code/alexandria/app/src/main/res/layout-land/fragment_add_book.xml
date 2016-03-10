@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     tools:context="it.jaschke.alexandria.AddBook">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/main_container"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="left|center_vertical"
             android:orientation="horizontal">
 
@@ -121,6 +121,7 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_action_discard"
+                    android:drawableStart="@drawable/ic_action_discard"
                     android:text="@string/cancel_button" />
 
                 <Button
@@ -131,6 +132,7 @@
                     android:layout_gravity="bottom"
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_action_accept"
+                    android:drawableStart="@drawable/ic_action_accept"
                     android:text="@string/ok_button" />
 
 
@@ -142,6 +144,7 @@
             android:id="@+id/error_rl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/main_container"
             android:layout_gravity="center">
 
             <TextView
@@ -171,5 +174,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
-    </FrameLayout>
+    </RelativeLayout>
 </ScrollView>

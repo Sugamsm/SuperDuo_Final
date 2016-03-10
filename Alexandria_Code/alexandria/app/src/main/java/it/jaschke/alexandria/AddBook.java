@@ -96,6 +96,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 }
 
                 if (Tools.isConnected(getActivity())) {
+
                     pb.setVisibility(View.VISIBLE);
                     Intent bookIntent = new Intent(getActivity(), BookService.class);
                     bookIntent.putExtra(BookService.EAN, text);
@@ -103,6 +104,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                     getActivity().startService(bookIntent);
                     details.setVisibility(View.VISIBLE);
                     error.setVisibility(View.GONE);
+
                     AddBook.this.restartLoader();
                 } else {
                     Toast.makeText(getActivity(), R.string.net_error, Toast.LENGTH_SHORT).show();
@@ -138,21 +140,27 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
                 }
                 //Once we have an ISBN, start a book intent
                 if (Tools.isConnected(getActivity())) {
-                    pb.setVisibility(View.VISIBLE);
-                    Intent bookIntent = new Intent(getActivity(), BookService.class);
-                    bookIntent.putExtra(BookService.EAN, ean);
-                    bookIntent.setAction(BookService.FETCH_BOOK);
-                    getActivity().startService(bookIntent);
-                    details.setVisibility(View.VISIBLE);
-                    error.setVisibility(View.GONE);
+                    if (!found) {
+                        pb.setVisibility(View.VISIBLE);
+                        Intent bookIntent = new Intent(getActivity(), BookService.class);
+                        bookIntent.putExtra(BookService.EAN, ean);
+                        bookIntent.setAction(BookService.FETCH_BOOK);
+                        getActivity().startService(bookIntent);
+                        details.setVisibility(View.VISIBLE);
+                        error.setVisibility(View.GONE);
+                    }
                     AddBook.this.restartLoader();
                 } else {
-                    Toast.makeText(getActivity(), R.string.net_error, Toast.LENGTH_SHORT).show();
-                    clearFields();
-                    pb.setVisibility(View.GONE);
-                    details.setVisibility(View.GONE);
-                    error.setVisibility(View.VISIBLE);
-                    return;
+                    if (!found) {
+                        Toast.makeText(getActivity(), R.string.net_error, Toast.LENGTH_SHORT).show();
+                        clearFields();
+                        pb.setVisibility(View.GONE);
+                        details.setVisibility(View.GONE);
+                        error.setVisibility(View.VISIBLE);
+                        return;
+                    } else {
+                        AddBook.this.restartLoader();
+                    }
                 }
             }
         });
